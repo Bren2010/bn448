@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package bn360
+package bn448
 
 // For details of the algorithms used, see "Multiplication and Squaring on
 // Pairing-Friendly Fields, Devegili et al.
@@ -26,6 +26,12 @@ func (e *gfP2) String() string {
 	x := new(big.Int).Mod(e.x, p)
 	y := new(big.Int).Mod(e.y, p)
 	return "(" + x.String() + "," + y.String() + ")"
+}
+
+func (e *gfP2) GoString() string {
+	x := new(big.Int).Mod(e.x, p)
+	y := new(big.Int).Mod(e.y, p)
+	return "&gfP2{bigFromBase10(\"" + x.String() + "\"), bigFromBase10(\"" + y.String() + "\")}"
 }
 
 func (e *gfP2) Put(pool *bnPool) {

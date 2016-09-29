@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package bn360
+package bn448
 
 // For details of the algorithms used, see "Multiplication and Squaring on
 // Pairing-Friendly Fields, Devegili et al.

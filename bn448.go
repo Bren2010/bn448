@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// Package bn360 implements a particular bilinear group at the 128-bit security level.
+// Package bn448 implements a particular bilinear group at the 128-bit security level.
 //
 // Bilinear groups are the basis of many of the new cryptographic protocols
 // that have been proposed over the past decade. They consist of a triplet of
@@ -10,11 +10,9 @@
 // (where gₓ is a generator of the respective group). That function is called
 // a pairing function.
 //
-// This package specifically implements the Optimal Ate pairing over a 360-bit
-// Barreto-Naehrig curve as described in
-// http://cryptojedi.org/papers/dclxvi-20100714.pdf. Its output is compatible
-// with the implementation described in that paper.
-package bn360 // import "golang.org/x/crypto/bn360"
+// This package specifically implements the Optimal Ate pairing over a 448-bit
+// Barreto-Naehrig curve.
+package bn448
 
 import (
 	"crypto/rand"
@@ -50,7 +48,7 @@ func RandomG1(r io.Reader) (*big.Int, *G1, error) {
 }
 
 func (g *G1) String() string {
-	return "bn360.G1" + g.p.String()
+	return "bn448.G1" + g.p.String()
 }
 
 // ScalarBaseMult sets e to g*k where g is the generator of the group and
@@ -98,9 +96,6 @@ func (n *G1) Marshal() []byte {
 	xBytes := new(big.Int).Mod(n.p.x, p).Bytes()
 	yBytes := new(big.Int).Mod(n.p.y, p).Bytes()
 
-	// Each value is a 360-bit number.
-	const numBytes = 360 / 8
-
 	ret := make([]byte, numBytes*2)
 	copy(ret[1*numBytes-len(xBytes):], xBytes)
 	copy(ret[2*numBytes-len(yBytes):], yBytes)
@@ -111,9 +106,6 @@ func (n *G1) Marshal() []byte {
 // Unmarshal sets e to the result of converting the output of Marshal back into
 // a group element and then returns e.
 func (e *G1) Unmarshal(m []byte) (*G1, bool) {
-	// Each value is a 360-bit number.
-	const numBytes = 360 / 8
-
 	if len(m) != 2*numBytes {
 		return nil, false
 	}
@@ -167,7 +159,7 @@ func RandomG2(r io.Reader) (*big.Int, *G2, error) {
 }
 
 func (g *G2) String() string {
-	return "bn360.G2" + g.p.String()
+	return "bn448.G2" + g.p.String()
 }
 
 // ScalarBaseMult sets e to g*k where g is the generator of the group and
@@ -208,9 +200,6 @@ func (n *G2) Marshal() []byte {
 	yxBytes := new(big.Int).Mod(n.p.y.x, p).Bytes()
 	yyBytes := new(big.Int).Mod(n.p.y.y, p).Bytes()
 
-	// Each value is a 360-bit number.
-	const numBytes = 360 / 8
-
 	ret := make([]byte, numBytes*4)
 	copy(ret[1*numBytes-len(xxBytes):], xxBytes)
 	copy(ret[2*numBytes-len(xyBytes):], xyBytes)
@@ -223,9 +212,6 @@ func (n *G2) Marshal() []byte {
 // Unmarshal sets e to the result of converting the output of Marshal back into
 // a group element and then returns e.
 func (e *G2) Unmarshal(m []byte) (*G2, bool) {
-	// Each value is a 360-bit number.
-	const numBytes = 360 / 8
-
 	if len(m) != 4*numBytes {
 		return nil, false
 	}
@@ -266,7 +252,7 @@ type GT struct {
 }
 
 func (g *GT) String() string {
-	return "bn360.GT" + g.p.String()
+	return "bn448.GT" + g.p.String()
 }
 
 // ScalarMult sets e to a*k and then returns e.
@@ -313,9 +299,6 @@ func (n *GT) Marshal() []byte {
 	yzxBytes := n.p.y.z.x.Bytes()
 	yzyBytes := n.p.y.z.y.Bytes()
 
-	// Each value is a 360-bit number.
-	const numBytes = 360 / 8
-
 	ret := make([]byte, numBytes*12)
 	copy(ret[1*numBytes-len(xxxBytes):], xxxBytes)
 	copy(ret[2*numBytes-len(xxyBytes):], xxyBytes)
@@ -336,9 +319,6 @@ func (n *GT) Marshal() []byte {
 // Unmarshal sets e to the result of converting the output of Marshal back into
 // a group element and then returns e.
 func (e *GT) Unmarshal(m []byte) (*GT, bool) {
-	// Each value is a 360-bit number.
-	const numBytes = 360 / 8
-
 	if len(m) != 12*numBytes {
 		return nil, false
 	}

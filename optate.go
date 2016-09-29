@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package bn360
+package bn448
 
 func lineFunctionAdd(r, p *twistPoint, q *curvePoint, r2 *gfP2, pool *bnPool) (a, b, c *gfP2, rOut *twistPoint) {
 	// See the mixed addition algorithm from "Faster Computation of the
@@ -180,9 +180,6 @@ func mulLine(ret *gfP12, a, b, c *gfP2, pool *bnPool) {
 	t2.Put(pool)
 	t.Put(pool)
 }
-
-// sixuPlus2NAF is 6u+2 in non-adjacent form.
-var sixuPlus2NAF = []int8{0, 0, 0, -1, 0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 0, -1, 0, -1, 0, 0, 0, -1, 0, 0, 1, 0, 0, 0, -1, 0, 1, 0, 1, 0, -1, 0, -1, 0, -1, 0, -1, 0, -1, 0, -1, 0, 1, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, -1, 0, -1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1}
 
 // miller implements the Miller loop for calculating the Optimal Ate pairing.
 // See algorithm 1 from http://cryptojedi.org/papers/dclxvi-20100714.pdf

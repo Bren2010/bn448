@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package bn360
+package bn448
 
 import (
 	"math/big"
@@ -13,16 +13,6 @@ import (
 // GF(p).
 type curvePoint struct {
 	x, y, z, t *big.Int
-}
-
-var curveB = new(big.Int).SetInt64(3)
-
-// curveGen is the generator of G₁.
-var curveGen = &curvePoint{
-	new(big.Int).SetInt64(1),
-	new(big.Int).SetInt64(-2),
-	new(big.Int).SetInt64(1),
-	new(big.Int).SetInt64(1),
 }
 
 func newCurvePoint(pool *bnPool) *curvePoint {
